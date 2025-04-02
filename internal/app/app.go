@@ -14,4 +14,5 @@ func CreateNewApp() (app *Application, err error) {
 	return &Application{
 		Logger: logger,
 	}, nil
+
 }
