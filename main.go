@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/amirtahajavadi/httpserver/internal/app"
+)
 
 func main() {
-	fmt.Println("hello world")
+	app, err := app.CreateNewApp()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("hello world", app.Logger)
+
 }
