@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/amirtahajavadi/httpserver/internal/app"
+	"github.com/amirtahajavadi/httpserver/internal/routes"
 )
 
 func main() {
@@ -17,22 +18,18 @@ func main() {
 		panic(err)
 	}
 	app.Logger.Println("app is running")
-
+	r := routes.SetupRoutes(app)
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", *port),
 		IdleTimeout:  time.Minute,
+		Handler:      r,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
 	}
-	http.HandleFunc("/health", HealthChecker)
 
 	err = server.ListenAndServe()
 	if err != nil {
 		return
 	}
 
-}
-
-func HealthChecker(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "status is available\n")
 }
